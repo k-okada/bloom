@@ -16,6 +16,17 @@ export DH_OPTIONS=-v --buildsystem=cmake
 export LDFLAGS=
 export PKG_CONFIG_PATH=@(InstallationPrefix)/lib/pkgconfig
 
+
+# Adding dpkg-buildflags due to https://github.com/ros-infrastructure/buildfarm/issues/197
+CPPFLAGS:=$(shell dpkg-buildflags --get CPPFLAGS)
+CFLAGS:=$(shell dpkg-buildflags --get CFLAGS)
+CXXFLAGS:=$(shell dpkg-buildflags --get CXXFLAGS)
+LDFLAGS:=$(shell dpkg-buildflags --get LDFLAGS)
+
+# Duplicate flags as CMake is ignoring CPPFLAGS.
+CFLAGS+=$(CPPFLAGS)
+CXXFLAGS+=$(CPPFLAGS)
+
 %:
 	dh  $@@
 
