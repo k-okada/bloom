@@ -96,16 +96,16 @@ except ImportError:
     debug(traceback.format_exc())
     error("empy was not detected, please install it.", exit=True)
 
-## Fix unicode bug in empy
-## This should be removed once upstream empy is fixed
-## See: https://github.com/ros-infrastructure/bloom/issues/196
+# Fix unicode bug in empy
+# This should be removed once upstream empy is fixed
+# See: https://github.com/ros-infrastructure/bloom/issues/196
 try:
     em.str = unicode
     em.Stream.write_old = em.Stream.write
     em.Stream.write = lambda self, data: em.Stream.write_old(self, data.encode('utf8'))
 except NameError:
     pass
-## End fix
+# End fix
 
 TEMPLATE_EXTENSION = '.em'
 
@@ -268,8 +268,8 @@ def generate_substitutions_from_package(
     # Installation prefix
     data['InstallationPrefix'] = installation_prefix
     # Resolve dependencies
-    depends = package.run_depends
-    build_depends = package.build_depends + package.buildtool_depends
+    depends = package.run_depends + package.buildtool_export_depends
+    build_depends = package.build_depends + package.buildtool_depends + package.test_depends
     unresolved_keys = depends + build_depends
     resolved_deps = resolve_dependencies(unresolved_keys, os_name,
                                          os_version, ros_distro,

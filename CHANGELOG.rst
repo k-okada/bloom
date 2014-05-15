@@ -1,3 +1,29 @@
+0.5.7 (2014-05-08 14:00:00 -0700)
+---------------------------------
+- Add versioned dependency on catkin_pkg 0.2.2
+
+0.5.6 (2014-05-07 17:16:43 -0700)
+---------------------------------
+- When generating Debian and Fedora packaging files, explicitly include buildtool_export_depends with run_depends
+
+0.5.5 (2014-05-01 10:24:31 -0700)
+---------------------------------
+- Add noarch flag to fedora generation for metapackages and packages marked as architecture_independent
+- Fix the order of the arguments for git-bloom-config copy
+
+0.5.4 (2014-04-11 16:09:00 -0700)
+---------------------------------
+- Fixed a problem with the documentation on readthedocs.org
+
+0.5.3 (2014-04-11 15:51:09 -0700)
+---------------------------------
+- Fixed a bug when handling unicode failed on values which were int's
+- Removed mention of username and hostname from bloom summaries in the release repo's README.md
+- Fixed unicode handling in Fedora generation
+- Modified handling of test dependencies for changes from REP-140 roll out
+- Removed references to python-distribute in favor of python-setuptools
+- Changed usuage of rosdep api to work with rosdep >= 0.10.27
+
 0.5.2 (2014-03-04 20:52:09 -0600)
 ---------------------------------
 - Pull request titles and body are now santized before printing
