@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package>
+  <name>bad_description_pkg</name>
+  <version>0.5.77</version>
+  <description>period(this is very important).  The  bad_description_pkg β packge</description>
+  <!-- if you do not have period on the first line, it ok?? -->
+  <!-- description>The bad_description_pkg β packge</description -->
+
+  <maintainer email="nobody@todo.todo">nobody</maintainer>
+
+  <license>TODO</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+</package>
