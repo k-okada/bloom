@@ -316,7 +316,8 @@ def generate_substitutions_from_package(
     peer_packages=None,
     releaser_history=None,
     fallback_resolver=None,
-    native=False
+    native=False,
+    skip_test_dependencies=False
 ):
     peer_packages = peer_packages or []
     data = {}
@@ -352,9 +353,12 @@ def generate_substitutions_from_package(
     build_depends = [
         dep for dep in (package.build_depends + package.buildtool_depends)
         if dep.evaluated_condition is not False]
-    test_depends = [
-        dep for dep in (package.test_depends)
-        if dep.evaluated_condition is not False]
+    if skip_test_dependencies is False:
+        test_depends = [
+            dep for dep in (package.test_depends)
+            if dep.evaluated_condition is not False]
+    else:
+        test_depends = []
     replaces = [
         dep for dep in package.replaces
         if dep.evaluated_condition is not False]
@@ -638,8 +642,10 @@ class DebianGenerator(BloomGenerator):
         add('--os-not-required', default=False, action="store_true",
             help="Do not error if this os is not in the platforms "
                  "list for rosdistro")
+        print("...........;;;;;;;;")
 
     def handle_arguments(self, args):
+        print(args)
         self.interactive = args.interactive
         self.debian_inc = args.debian_inc
         self.os_name = args.os_name
@@ -682,6 +688,7 @@ class DebianGenerator(BloomGenerator):
             # First branch is debian/[<rosdistro>/]<package>
             self.debian_branches.append(args[0][0])
             self.branch_args.extend(args)
+        self.skip_test_dependencies=args.skip_test_dependencies
 
     def summarize(self):
         info("Generating source debs for the packages: " + str(self.names))
@@ -928,7 +935,8 @@ class DebianGenerator(BloomGenerator):
             self.debian_inc,
             [p.name for p in self.packages.values()],
             releaser_history=releaser_history,
-            fallback_resolver=missing_dep_resolver
+            fallback_resolver=missing_dep_resolver,
+            skip_test_dependencies=skip_test_dependencies
         )
 
     def generate_debian(self, package, debian_distro):
